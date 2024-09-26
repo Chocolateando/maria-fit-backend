@@ -1,34 +1,43 @@
-require("dotenv").config();
-const jwt = require('jsonwebtoken');
-const authModel = require("../model/auth");
-const userModel = require("../model/user")
+const hash = require("../util/passwordHash");
+const token = require("../util/jwtToken");
+const userRepository = require("../repository/userRepository");
 
 exports.auth = async function (userData) {
   try {
-    const isValidUser = await userModel.findOne({dni:userData.username});
-    if(!isValidUser) throw("USUARIO NO REGISTRADO");
-    else if(isValidUser.status == 0) throw("USUARIO BLOQUEADO");
-    const user = await authModel.findOne({ username: isValidUser.userId, password: userData.password });
-    if(!user) throw("CREDENCIALES INCORRECTAS");
-    let token = jwt.sign({ userCode: user.userId, role: isValidUser.rol}, process.env.KEY, {expiresIn: '1d'});
-    return { token };
+    const user = await userRepository.findByEmail(userData.correo);
+    if (!user) throw "El correo ingresado no esta registrado.";
+    const userExists = await hash.checkPassword(userData.password, user.password_hash);
+    if (!userExists) return null;
+    else return token.generateToken(user);
   } catch (error) {
-      return { error };
+    console.log("No se  pudo autenticar el usuario: ", userData.correo);
+    console.log(error);
+    throw new Error(error);
   }
 };
 
 exports.register = async (userData) => {
-    try {
-        let auth = await authModel.create({
-            userId: userData.dni,
-            username: userData.dni,
-            password: userData.password
-        })
-        console.log("Credencial de usuario creado correctamente con userId: ", userData.dni);
-        return true;
-    } catch (error) {
-        console.log("No se  pudo crear las credenciales del usuario con id: ",userData.dni);
-        console.log(error);
-       return error; 
-    }
-}
+  try {
+    const userExists = await userRepository.findByEmail(userData.correo);
+    if (userExists) throw "El correo ingresado ya existe.";
+    const password = await hash.hashGenerator(userData.password);
+    let newUser = {
+      name: userData.nombre,
+      lastname: userData.apellidos,
+      age: userData.edad,
+      tall: userData.altura,
+      weight: userData.peso,
+      phone: userData.telefono,
+      email: userData.correo,
+      password_hash: password,
+      subscription_status: false,
+    };
+    const user = await userRepository.save(newUser);
+    console.log("Usuario creado correctamente con userId: ", user.id);
+    return true;
+  } catch (error) {
+    console.log("No se  pudo crear el usuario: ", userData.correo);
+    console.log(error);
+    throw new Error(error);
+  }
+};

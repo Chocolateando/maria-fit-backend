@@ -18,7 +18,5 @@ app.set("views", path.join(__dirname, "src/views"));
 require("./src/config/routes.js")(app);
 
 app.listen(port, () => {
-console.log(`Servidor Express escuchando en el puerto ${port}`);
-});
-
-db();
+console.log(`Servidor Express escuchando en el puerto ${port}`);});
+db.connect();
