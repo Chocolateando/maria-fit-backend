@@ -9,10 +9,13 @@ module.exports = (app) => {
     app.post('/auth', authController.auth);
     app.post('/register', authController.register);
 
-
     app.get('/recipe/list', middleware.validateToken ,recipeController.list)
-    app.get('/recipe/detail/{id}')
+    app.get('/recipe/detail', middleware.validateToken, recipeController.getById)
     app.post('/recipe/create', middleware.validateToken ,recipeController.create);
     //app.post('/recipe/update', middleware.validateToken ,recipeController.list);
+    app.get('/recipe/categories', middleware.validateToken, recipeController.listCategories);
+    app.get('/recipe/difficulty', middleware.validateToken, recipeController.listDifficulty);
+    
 
+    
 }

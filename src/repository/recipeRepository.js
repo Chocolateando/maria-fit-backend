@@ -1,9 +1,36 @@
 const pool = require("../../database");
 
+exports.listCategories = async () => {
+  try {
+    const res = await pool.query("SELECT rc.name FROM recipe_categories rc");
+    return res.rows;
+  } catch (err) {
+    throw new Error("Error al consultar a la BD: " + err.message);
+  }
+}
+
+exports.listDifficulty = async () => {
+  try {
+    const res = await pool.query("SELECT rd.name FROM recipe_difficulty rd");
+    return res.rows;
+  } catch (err) {
+    throw new Error("Error al consultar a la BD: " + err.message);
+  }
+}
+
 exports.listAll = async () => {
   try {
     const res = await pool.query("SELECT * FROM recipes r WHERE r.status = $1", [1]);
     return res.rows;
+  } catch (err) {
+    throw new Error("Error al consultar a la BD: " + err.message);
+  }
+};
+
+exports.listById = async (id) => {
+  try {
+    const res = await pool.query("SELECT * FROM recipes r WHERE r.id = $1 and r.status = $2", [id,1]);
+    return res.rows[0];
   } catch (err) {
     throw new Error("Error al consultar a la BD: " + err.message);
   }

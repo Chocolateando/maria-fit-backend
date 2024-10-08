@@ -1,13 +1,41 @@
 const recipeRepository = require('../repository/recipeRepository');
 
 exports.list = async () => {
-    try {
-        return recipes = await recipeRepository.listAll();
-      } catch (error) {
-        console.log(error);
-        throw new Error(error);
-      }
+  try {
+    return (recipes = await recipeRepository.listAll());
+  } catch (error) {
+    console.log(error);
+    throw new Error(error);
+  }
+};
+
+exports.listById = async (id) => {
+  try {
+    return recipe = await recipeRepository.listById(id);
+  } catch (error) {
+    console.log(error);
+    throw new Error(error);
+  }
 }
+
+exports.listCategories = async () => {
+  try {
+    return categories = await recipeRepository.listCategories();
+  } catch (error) {
+    console.log(error);
+    throw new Error(error);
+  }
+}
+
+exports.listDifficulty = async () => {
+  try {
+    return difficultyList = await recipeRepository.listDifficulty();
+  } catch (error) {
+    console.log(error);
+    throw new Error(error);
+  }
+}
+
 
 exports.create = async (recipe) => {
     try {
