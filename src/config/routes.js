@@ -5,6 +5,7 @@ const recipeController = require('../controller/recipeController');
 
 module.exports = (app) => {
     app.get('/', (req, res) => {res.send('nemesis');});
+    app.get('/test', (req, res) => {res.send('test');});
     app.post('/validate', middleware.validateAdmToken , (req, res) => {res.status(201).send({status: true, msg: "success"})});
     app.post('/auth', authController.auth);
     app.post('/register', authController.register);
