@@ -1,23 +1,12 @@
-const { Pool } = require('pg');
 require('dotenv').config();
+const mongoose = require('mongoose')
+const DB_URI = process.env.MONGO_URI;
 
-const pool = new Pool({
-  user: process.env.PGUSER,
-  host: process.env.PGHOST,
-  database: process.env.PGDATABASE,
-  password: process.env.PGPASSWORD,
-  port: process.env.PGPORT,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
-
-pool.on('connect', () => {
-  console.log('Conectado a PostgreSQL mediante pool');
-});
-
-pool.on('error', (err) => {
-  console.error('Error en el pool de conexiones:', err.stack);
-});
-
-module.exports = pool;
+module.exports = () => {
+    const connect = () => {
+        mongoose.connect(DB_URI)
+        .then(() => console.log('Connected to MongoDB'))
+        .catch((err) => console.error(err));
+    }
+    connect();
+}

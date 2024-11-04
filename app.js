@@ -19,4 +19,4 @@ require("./src/config/routes.js")(app);
 
 app.listen(port, () => {
 console.log(`Servidor Express escuchando en el puerto ${port}`);});
-db.connect();
+db();

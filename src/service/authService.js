@@ -1,14 +1,20 @@
 const hash = require("../util/passwordHash");
 const token = require("../util/jwtToken");
 const userRepository = require("../repository/userRepository");
+const userModel = require("../model/User");
+const subscriptionModel = require("../model/Subscription");
+
+
 
 exports.auth = async function (userData) {
   try {
-    const user = await userRepository.findByEmail(userData.correo);
+    const user = await userModel.findOne({ email: userData.correo });
     if (!user) throw "El correo ingresado no esta registrado.";
     const userExists = await hash.checkPassword(userData.password, user.password_hash);
     if (!userExists) return null;
-    else return token.generateToken(user);
+    const subscription = await subscriptionModel.findOne({user: user._id});
+    user.subscription_status = subscription ? subscription.subscription_status : false;
+    return token.generateToken(user);
   } catch (error) {
     console.log("No se  pudo autenticar el usuario: ", userData.correo);
     console.log(error);
@@ -18,21 +24,20 @@ exports.auth = async function (userData) {
 
 exports.register = async (userData) => {
   try {
-    const userExists = await userRepository.findByEmail(userData.correo);
+    const userExists = await userModel.findOne({ email: userData.correo });
     if (userExists) throw "El correo ingresado ya existe.";
     const password = await hash.hashGenerator(userData.password);
     let newUser = {
       name: userData.nombre,
       lastname: userData.apellidos,
-      age: userData.edad,
+      birthday: userData.nacimiento,
       tall: userData.altura,
       weight: userData.peso,
       phone: userData.telefono,
       email: userData.correo,
       password_hash: password,
-      subscription_status: false,
     };
-    const user = await userRepository.save(newUser);
+    const user = await userModel.create(newUser);
     console.log("Usuario creado correctamente con userId: ", user.id);
     return true;
   } catch (error) {
