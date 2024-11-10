@@ -1,11 +1,17 @@
 const mongoose = require("mongoose");
 
-const PlanSchema = new mongoose.Schema(
+const Characteristics = new mongoose.Schema(
   {
-    name: {
+    text: {
       type: String,
       required: true,
-    },
+    }
+  },
+  { _id: false }
+);
+
+const PlanSchema = new mongoose.Schema(
+  {
     type: {
       type: String,
       required: true,
@@ -18,11 +24,11 @@ const PlanSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    CicleType: {
+    cicleType: {
       type: String,
       required: true,
     },
-    CicleNumber: {
+    cicleNumber: {
       type: Number,
       required: true,
     },
@@ -30,13 +36,11 @@ const PlanSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    characteristics: [
-      {
-        text: {
-          type: String,
-        },
-      },
-    ],
+    characteristics: [Characteristics],
+    status: {
+      type: Boolean,
+      default: true
+    }
   },
   {
     versionKey: false,

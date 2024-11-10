@@ -19,8 +19,8 @@ const SubscriptionSchema = new mongoose.Schema(
       required: true,
     },
     subscription_status: {
-      type: Boolean,
-      default: false,
+      type: String,
+      default: "free",
     }
   },
   {

@@ -1,8 +1,8 @@
-const recipeService = require('../service/recipeService');
+const planService = require("../service/planService");
 
 exports.list = async (req, res) => {
     try {
-      const recipes = await recipeService.list();
+      const recipes = await planService.list();
       res.status(200).send({success: true, data: recipes});
     } catch (error) {
       console.log(error);
@@ -14,7 +14,7 @@ exports.getById = async (req, res) => {
   try {
     const recipeId = req.query.id; 
     if (!recipeId) throw ("Parametros Incorrectos. id = ", recipeId);
-    const recipe = await recipeService.listById(recipeId);
+    const recipe = await planService.listById(recipeId);
     res.status(200).send({success: true, data: recipe});
   } catch (error) {
     console.log(error);
@@ -22,10 +22,11 @@ exports.getById = async (req, res) => {
   }
 }
 
+
 exports.create = async (req, res) => {
   try {
     const recipe = req.body;
-    const saved = await recipeService.create(recipe);
+    const saved = await planService.create(recipe);
     res.status(200).send({ success: true, id: saved.id });
   } catch (error) {
     console.log(error);
@@ -33,23 +34,13 @@ exports.create = async (req, res) => {
   }
 };
 
-exports.filters = async (req, res) => {
-  try {
-    const filters = await recipeService.listAllFilters();
-    res.status(200).send({success: true, data: filters});
-  } catch (error) {
-    console.log(error);
-    res.status(500).send({success: false, msg: error.message ? error.message : error});
-  }
-}
-
-exports.createFilters = async (req, res) => {
-  try {
-    const filters = req.body;
-    const saved = await recipeService.createFilters(filters);
-    res.status(200).send({ success: true, id: saved.id });
-  } catch (error) {
-    console.log(error);
-    res.status(500).send({ success: false, msg: error.message ? error.message : error });
-  }
-};
+exports.update = async (req, res) => {
+    try {
+      const recipe = req.body;
+      const saved = await planService.create(recipe);
+      res.status(200).send({ success: true, id: saved.id });
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({ success: false, msg: error.message ? error.message : error });
+    }
+  };

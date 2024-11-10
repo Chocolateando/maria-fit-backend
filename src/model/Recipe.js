@@ -62,6 +62,7 @@ const RecipeSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    tipsAndTricks: [Instructions],
     image_url: {
       type: String,
       required: true,

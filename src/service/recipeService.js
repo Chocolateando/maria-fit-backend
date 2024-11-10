@@ -1,5 +1,7 @@
 const recipeRepository = require("../repository/recipeRepository");
 const recipeModel = require("../model/Recipe");
+const filterModel = require("../model/Filters");
+
 
 exports.list = async () => {
   try {
@@ -19,18 +21,24 @@ exports.listById = async (id) => {
   }
 };
 
-exports.listCategories = async () => {
+exports.listAllFilters = async () => {
   try {
-    return (categories = await recipeRepository.listCategories());
+    return (filters = await filterModel.find());
   } catch (error) {
     console.log(error);
     throw new Error(error);
   }
 };
 
-exports.listDifficulty = async () => {
+exports.createFilters = async (filters) => {
   try {
-    return (difficultyList = await recipeRepository.listDifficulty());
+    let newFilter = {
+      type: filters.tipos,
+      difficulty: filters.dificultad,
+      category: filters.categorias,
+      planType: filters.tipoPlan
+    }
+    return (filter = await filterModel.create(newFilter));
   } catch (error) {
     console.log(error);
     throw new Error(error);
@@ -49,6 +57,7 @@ exports.create = async (recipe) => {
       ingredients: recipe.ingredientes,
       instructions: recipe.instructions,
       tags: recipe.etiquetas,
+      tipsAndTricks: recipe.tips,
       image_url: recipe.imagen,
     };
     return (recipes = await recipeModel.create(newRecipe));

@@ -3,7 +3,7 @@ const token = require("../util/jwtToken");
 const userRepository = require("../repository/userRepository");
 const userModel = require("../model/User");
 const subscriptionModel = require("../model/Subscription");
-
+const planModel = require("../model/Plan");
 
 
 exports.auth = async function (userData) {
@@ -13,7 +13,7 @@ exports.auth = async function (userData) {
     const userExists = await hash.checkPassword(userData.password, user.password_hash);
     if (!userExists) return null;
     const subscription = await subscriptionModel.findOne({user: user._id});
-    user.subscription_status = subscription ? subscription.subscription_status : false;
+    user.subscription_status = subscription ? subscription.subscription_status : "free";
     return token.generateToken(user);
   } catch (error) {
     console.log("No se  pudo autenticar el usuario: ", userData.correo);
@@ -26,7 +26,13 @@ exports.register = async (userData) => {
   try {
     const userExists = await userModel.findOne({ email: userData.correo });
     if (userExists) throw "El correo ingresado ya existe.";
+    const plan = await planModel.findOne({type: "Free", status: true});
+    if (!plan) throw "El plan gratuito no se encuentra disponible.";
     const password = await hash.hashGenerator(userData.password);
+    console.log(new Date().getTimezoneOffset() / 60);
+    const fechaActual = new Date();
+    const fechaFutura = new Date(fechaActual);
+    fechaFutura.setDate(fechaFutura.getDate() + (30 * plan.cicleNumber));
     let newUser = {
       name: userData.nombre,
       lastname: userData.apellidos,
@@ -38,6 +44,12 @@ exports.register = async (userData) => {
       password_hash: password,
     };
     const user = await userModel.create(newUser);
+    await subscriptionModel.create({
+      user: user._id,
+      plan: plan._id,
+      initDate: fechaActual,
+      endDate: fechaFutura,
+    }); 
     console.log("Usuario creado correctamente con userId: ", user.id);
     return true;
   } catch (error) {
