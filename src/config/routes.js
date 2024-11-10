@@ -22,7 +22,7 @@ module.exports = (app) => {
     app.get('/recipe/detail', middleware.validateToken, recipeController.getById)
     app.post('/recipe/create', middleware.validateToken ,recipeController.create);
     //app.post('/recipe/update', middleware.validateToken ,recipeController.update);
-
+//recipess
     app.get('/recipe/filters', middleware.validateToken, recipeController.filters)
     app.post('/recipe/filters', middleware.validateToken, recipeController.createFilters);
 
