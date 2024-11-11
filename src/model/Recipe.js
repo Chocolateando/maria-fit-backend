@@ -48,6 +48,10 @@ const RecipeSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    objetive: {
+      type: String,
+      required: true,
+    },
     portions: {
       type: Number,
       required: true,
@@ -62,7 +66,15 @@ const RecipeSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    firstTag: {
+      type: String,
+      required: true,
+    },
     tipsAndTricks: [Instructions],
+    subscriptionType: {
+      type: String,
+      required: true,
+    },
     image_url: {
       type: String,
       required: true,

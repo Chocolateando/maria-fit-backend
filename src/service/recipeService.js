@@ -52,12 +52,15 @@ exports.create = async (recipe) => {
       description: recipe.descripcion,
       category: recipe.categoria,
       difficulty: recipe.dificultad,
+      objetive: recipe.tipoPlan,
       portions: recipe.porciones,
       preparationtime: recipe.tiempo,
       ingredients: recipe.ingredientes,
       instructions: recipe.instructions,
       tags: recipe.etiquetas,
+      firstTag: recipe.etiquetaPrincipal,
       tipsAndTricks: recipe.tips,
+      subscriptionType: recipe.suscripcion,
       image_url: recipe.imagen,
     };
     return (recipes = await recipeModel.create(newRecipe));
