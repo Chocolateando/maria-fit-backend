@@ -33,6 +33,17 @@ exports.create = async (req, res) => {
   }
 };
 
+exports.update = async (req, res) => {
+  try {
+    const recipe = req.body;
+    const updated = await recipeService.update(recipe);
+    res.status(200).send({ success: true, id: updated.id });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ success: false, msg: error.message ? error.message : error });
+  }
+};
+
 exports.filters = async (req, res) => {
   try {
     const filters = await recipeService.listAllFilters();

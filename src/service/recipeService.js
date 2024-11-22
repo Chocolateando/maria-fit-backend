@@ -69,3 +69,12 @@ exports.create = async (recipe) => {
     throw new Error(error);
   }
 };
+
+exports.update = async (recipe) => {
+  try {
+    return (recipes = await recipeModel.findByIdAndUpdate(recipe._id, recipe));
+  } catch (error) {
+    console.log(error);
+    throw new Error(error);
+  }
+};

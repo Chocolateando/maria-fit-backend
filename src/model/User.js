@@ -38,6 +38,10 @@ const UserSchema = new mongoose.Schema(
       type: Number,
       default: 1,
     },
+    uType: {
+      type: String,
+      default:"",
+    },
   },
   {
     versionKey: false,

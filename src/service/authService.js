@@ -8,7 +8,7 @@ const planModel = require("../model/Plan");
 
 exports.auth = async function (userData) {
   try {
-    const user = await userModel.findOne({ email: userData.correo });
+    let user = await userModel.findOne({ email: userData.correo });
     if (!user) throw "El correo ingresado no esta registrado.";
     const userExists = await hash.checkPassword(userData.password, user.password_hash);
     if (!userExists) return null;
