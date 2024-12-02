@@ -48,20 +48,20 @@ exports.createFilters = async (filters) => {
 exports.create = async (recipe) => {
   try {
     let newRecipe = {
-      title: recipe.titulo,
-      description: recipe.descripcion,
-      category: recipe.categoria,
-      difficulty: recipe.dificultad,
-      objetive: recipe.tipoPlan,
-      portions: recipe.porciones,
-      preparationtime: recipe.tiempo,
-      ingredients: recipe.ingredientes,
+      title: recipe.title,
+      description: recipe.description,
+      category: recipe.category,
+      difficulty: recipe.difficulty,
+      objetive: recipe.objetive,
+      portions: recipe.portions,
+      preparationtime: recipe.preparationtime,
+      ingredients: recipe.ingredients,
       instructions: recipe.instructions,
-      tags: recipe.etiquetas,
-      firstTag: recipe.etiquetaPrincipal,
-      tipsAndTricks: recipe.tips,
-      subscriptionType: recipe.suscripcion,
-      image_url: recipe.imagen,
+      tags: recipe.tags,
+      firstTag: recipe.firstTag,
+      tipsAndTricks: recipe.tipsAndTricks,
+      subscriptionType: recipe.subscriptionType,
+      image_url: recipe.image_url,
     };
     return (recipes = await recipeModel.create(newRecipe));
   } catch (error) {
