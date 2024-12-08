@@ -22,6 +22,8 @@ module.exports = (app) => {
     app.get('/recipe/detail', middleware.validateToken, recipeController.getById)
     app.post('/recipe/create', middleware.validateAdmToken ,recipeController.create);
     app.post('/recipe/update', middleware.validateAdmToken ,recipeController.update);
+    app.post('/recipe/delete', middleware.validateAdmToken ,recipeController.delete);
+
 //recipess
     app.get('/recipe/filters', middleware.validateToken, recipeController.filters)
     app.post('/recipe/filters', middleware.validateToken, recipeController.createFilters);

@@ -44,6 +44,18 @@ exports.update = async (req, res) => {
   }
 };
 
+exports.delete = async (req, res) => {
+  try {
+    const recipeId = req.body._id;
+    if (!recipeId) throw ("Parametros Incorrectos. id = ", recipeId);
+    const deleted = await recipeService.delete(recipeId);
+    res.status(200).send({ success: true, id: deleted.id });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ success: false, msg: error.message ? error.message : error });
+  }
+};
+
 exports.filters = async (req, res) => {
   try {
     const filters = await recipeService.listAllFilters();

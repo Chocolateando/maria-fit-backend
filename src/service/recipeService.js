@@ -78,3 +78,12 @@ exports.update = async (recipe) => {
     throw new Error(error);
   }
 };
+
+exports.delete = async (recipeId) => {
+  try {
+    return (recipes = await recipeModel.findByIdAndDelete(recipeId));
+  } catch (error) {
+    console.log(error);
+    throw new Error(error);
+  }
+};

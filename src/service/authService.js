@@ -9,7 +9,7 @@ const planModel = require("../model/Plan");
 exports.auth = async function (userData) {
   try {
     let user = await userModel.findOne({ email: userData.correo });
-    if (!user) throw "El correo ingresado no esta registrado.";
+    if (!user) return null;
     const userExists = await hash.checkPassword(userData.password, user.password_hash);
     if (!userExists) return null;
     const subscription = await subscriptionModel.findOne({user: user._id});
