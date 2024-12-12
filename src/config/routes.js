@@ -17,12 +17,13 @@ module.exports = (app) => {
     app.post('/subscription/detail', middleware.validateToken ,userController.getById);
     //app.post('/subscription/detail', middleware.validateToken ,userController.getById);
 
-
+    //recipess
     app.get('/recipe/list', middleware.validateToken ,recipeController.list)
     app.get('/recipe/detail', middleware.validateToken, recipeController.getById)
     app.post('/recipe/create', middleware.validateAdmToken ,recipeController.create);
     app.post('/recipe/update', middleware.validateAdmToken ,recipeController.update);
-    //recipess
+    app.post('/recipe/delete', middleware.validateAdmToken ,recipeController.delete);
+
     app.get('/recipe/filters', middleware.validateToken, recipeController.filters)
     app.post('/recipe/filters', middleware.validateToken, recipeController.createFilters);
 
