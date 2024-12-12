@@ -47,23 +47,7 @@ exports.createFilters = async (filters) => {
 
 exports.create = async (recipe) => {
   try {
-    let newRecipe = {
-      title: recipe.titulo,
-      description: recipe.descripcion,
-      category: recipe.categoria,
-      difficulty: recipe.dificultad,
-      objetive: recipe.tipoPlan,
-      portions: recipe.porciones,
-      preparationtime: recipe.tiempo,
-      ingredients: recipe.ingredientes,
-      instructions: recipe.instructions,
-      tags: recipe.etiquetas,
-      firstTag: recipe.etiquetaPrincipal,
-      tipsAndTricks: recipe.tips,
-      subscriptionType: recipe.suscripcion,
-      image_url: recipe.imagen,
-    };
-    return (recipes = await recipeModel.create(newRecipe));
+    return (recipes = await recipeModel.create(recipe));
   } catch (error) {
     console.log(error);
     throw new Error(error);

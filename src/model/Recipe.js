@@ -44,6 +44,10 @@ const RecipeSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    type: {
+      type: String,
+      required: true,
+    },
     difficulty: {
       type: String,
       required: true,
