@@ -3,8 +3,14 @@ exports.isValidEmail = function (correo) {
   return regex.test(correo);
 };
 
+exports.isValidPhone = function (phone) {
+  const regex = /^\d+$/;
+  return regex.test(phone);
+};
+
+
 exports.isValidPasswordString = (value) => {
-  if (value === null || value === undefined) {
+  if (value === null || value === undefined || value.length < 8) {
     return false;
   }
 

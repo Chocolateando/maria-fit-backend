@@ -19,6 +19,7 @@ exports.register = async (req, res) => {
   try {
     let userData = req.body;
     if (!validator.isValidEmail(userData.correo)) throw("El correo no cuenta con el formato correcto.");
+    if (!validator.isValidPhone(userData.telefono)) throw("El número de teléfono no es válido.");
     if (!validator.isValidPasswordString(userData.password)) throw("La contraseña no cumple con los requerimientos.");
     await authService.register(userData);
     res.status(200).send({success: true, msg: "Usuario registrado correctamente"});
