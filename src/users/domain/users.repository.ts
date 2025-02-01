@@ -2,7 +2,7 @@ import { User } from './users';
 import { UserEntity } from '../infraestructure/persistence/user.entity';
 
 export abstract class UsersRepository {
-  abstract createUser(user: User): Promise<boolean>;
+  abstract createUser(user: User): Promise<UserEntity>;
 
   abstract updateUser(user: User): Promise<boolean>;
 
@@ -11,4 +11,6 @@ export abstract class UsersRepository {
   abstract getUserById(id: string): Promise<UserEntity>;
 
   abstract getUsers(): Promise<UserEntity[]>;
+
+  abstract getUserByEmail(email: string): Promise<UserEntity | null>;
 }

@@ -2,7 +2,7 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { PlansRepository } from '../domain/plans.repository';
 import { IResponse } from '../../shared/domain/response';
 import { Plan } from '../domain/plan';
-import { ICreatePlanDTO } from '../../users/infraestructure/dtos/dtos';
+import { ICreatePlanDTO } from '../infraestructure/dtos/dtos';
 
 @Injectable()
 export class PlansApplication {

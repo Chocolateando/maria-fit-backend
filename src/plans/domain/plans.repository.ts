@@ -6,4 +6,6 @@ export abstract class PlansRepository {
   abstract getPlanById(id: string): Promise<PlanEntity | null>;
 
   abstract createPlan(plan: PlanEntity): Promise<boolean>;
+
+  abstract getPlanByType(type: string): Promise<PlanEntity | null>;
 }

@@ -1,10 +1,10 @@
-export interface ICreatePlanDTO {
-  type: string;
-  price: string;
-  currency: string;
-  cicleType: string;
-  cicleNumber: number;
-  description: string;
-  characteristics: string[];
-  status: boolean;
+export interface ICreateUserDto {
+  name: string;
+  lastname: string;
+  birthday: string;
+  tall: string;
+  weight: number;
+  phone: string;
+  email: string;
+  password: string;
 }

@@ -5,7 +5,6 @@ import { ObjectId } from 'mongodb';
 import { UsersRepository } from '../domain/users.repository';
 import { User } from '../domain/users';
 import { Repository } from 'typeorm';
-import { HashText } from '../../shared/infraestructure/security/security';
 
 @Injectable()
 export class UsersService implements UsersRepository {
@@ -16,22 +15,15 @@ export class UsersService implements UsersRepository {
     private usersRepository: Repository<UserEntity>,
   ) {}
 
-  public async createUser(user: User): Promise<boolean> {
+  public async createUser(user: User): Promise<UserEntity> {
     this.logger.debug(`Executing query: createUser (${JSON.stringify(user)})`);
     try {
-      const userFound = this.usersRepository.findOne({
-        where: { email: user.email },
-      });
-      if (userFound) return false;
-      user.password_hash = await HashText(user.password_hash);
-      const dbUser = this.usersRepository.create(user.toEntity());
-      await this.usersRepository.save(dbUser);
-      return true;
+      return await this.usersRepository.save(user);
     } catch (error) {
       this.logger.error(
         `Error executing query createUser (${JSON.stringify(user)}), error: ${error}`,
       );
-      return false;
+      return null;
     }
   }
 
@@ -72,13 +64,25 @@ export class UsersService implements UsersRepository {
   public async updateUser(user: User): Promise<boolean> {
     this.logger.debug(`Executing query: updateUser (${JSON.stringify(user)})`);
     try {
-      await this.usersRepository.update(user.id, user.toEntity());
+      await this.usersRepository.update(user._id, user.toEntity());
       return true;
     } catch (error) {
       this.logger.error(
         `Error executing query updateUser (${JSON.stringify(user)}), error: ${error}`,
       );
       return false;
+    }
+  }
+
+  public async getUserByEmail(email: string): Promise<UserEntity | null> {
+    this.logger.debug(`Executing query: getUserByEmail (${email})`);
+    try {
+      return this.usersRepository.findOne({ where: { email } });
+    } catch (error) {
+      this.logger.error(
+        `Error executing query getUserByEmail (${email}), error: ${error}`,
+      );
+      return null;
     }
   }
 }

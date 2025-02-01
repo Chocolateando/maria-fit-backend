@@ -49,4 +49,18 @@ export class PlansService implements PlansRepository {
       return false;
     }
   }
+
+  public async getPlanByType(type: string): Promise<PlanEntity | null> {
+    this.logger.debug(`Executing query: getPlanByType (${type})`);
+    try {
+      return await this.usersRepository.findOne({
+        where: { type: type, status: true },
+      });
+    } catch (error) {
+      this.logger.error(
+        `Error executing getPlanByType (${type}), error: ${error}`,
+      );
+      return null;
+    }
+  }
 }

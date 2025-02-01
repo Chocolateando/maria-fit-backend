@@ -2,14 +2,14 @@ import {
   Entity,
   Column,
   ObjectId,
-  PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  ObjectIdColumn,
 } from 'typeorm';
 
 @Entity('users')
 export class UserEntity {
-  @PrimaryGeneratedColumn()
+  @ObjectIdColumn()
   _id: ObjectId;
   @Column({ type: 'varchar', nullable: false })
   name: string;

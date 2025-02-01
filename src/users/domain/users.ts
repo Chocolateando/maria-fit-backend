@@ -3,7 +3,7 @@ import { UserEntity } from '../infraestructure/persistence/user.entity';
 import { CompareHash } from '../../shared/infraestructure/security/security';
 
 export class User {
-  id: ObjectId;
+  _id: ObjectId;
   name: string;
   lastname: string;
   birthday: string;
@@ -27,12 +27,12 @@ export class User {
     phone: string,
     email: string,
     password_hash: string,
-    status: number,
-    uType: string,
-    createdAt: Date,
-    updatedAt: Date,
+    status?: number,
+    uType?: string,
+    createdAt?: Date,
+    updatedAt?: Date,
   ) {
-    this.id = id;
+    this._id = id;
     this.name = name;
     this.lastname = lastname;
     this.birthday = birthday;
@@ -41,10 +41,10 @@ export class User {
     this.phone = phone;
     this.email = email;
     this.password_hash = password_hash;
-    this.status = status;
-    this.uType = uType;
-    this.createdAt = createdAt;
-    this.updatedAt = updatedAt;
+    this.status = status || 1;
+    this.uType = uType || '';
+    this.createdAt = createdAt || new Date();
+    this.updatedAt = updatedAt || new Date();
   }
 
   public sanitize(): void {
@@ -71,7 +71,7 @@ export class User {
 
   public toEntity(): UserEntity {
     return {
-      _id: this.id,
+      _id: this._id,
       name: this.name,
       lastname: this.lastname,
       birthday: this.birthday,
@@ -82,8 +82,8 @@ export class User {
       password_hash: this.password_hash,
       status: this.status,
       uType: this.uType,
-      createdAt: this.createdAt,
-      updatedAt: this.updatedAt,
+      createdAt: this.createdAt || new Date(),
+      updatedAt: this.updatedAt || new Date(),
     };
   }
 

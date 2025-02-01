@@ -9,8 +9,8 @@ export class Subscription {
   initDate: Date;
   endDate: Date;
   subscription_status: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 
   constructor(
     id: string,

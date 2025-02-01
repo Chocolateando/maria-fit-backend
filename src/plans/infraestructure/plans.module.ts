@@ -13,5 +13,6 @@ import { PlansController } from './plans.controller';
     PlansApplication,
   ],
   controllers: [PlansController],
+  exports: [PlansRepository],
 })
 export class PlansModule {}

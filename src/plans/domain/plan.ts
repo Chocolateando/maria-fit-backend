@@ -1,6 +1,6 @@
 import { PlanEntity } from '../infraestructure/persistence/plan.entity';
-import { ICreatePlanDTO } from '../../users/infraestructure/dtos/dtos';
 import { ObjectId } from 'mongodb';
+import { ICreatePlanDTO } from '../infraestructure/dtos/dtos';
 
 export class Plan {
   id: string;
