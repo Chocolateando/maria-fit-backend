@@ -11,7 +11,7 @@ export class SubscriptionsService implements SubscriptionsRepository {
 
   constructor(
     @InjectRepository(SubscriptionEntity)
-    private usersRepository: Repository<SubscriptionEntity>,
+    private subsRepository: Repository<SubscriptionEntity>,
   ) {}
 
   public async createSubscription(
@@ -21,8 +21,8 @@ export class SubscriptionsService implements SubscriptionsRepository {
       `Executing query: createSubscription (${JSON.stringify(subscription)})`,
     );
     try {
-      const subscriptionDB = this.usersRepository.create(subscription);
-      await this.usersRepository.save(subscriptionDB);
+      const subscriptionDB = this.subsRepository.create(subscription);
+      await this.subsRepository.save(subscriptionDB);
       return true;
     } catch (error) {
       this.logger.error(
@@ -39,7 +39,7 @@ export class SubscriptionsService implements SubscriptionsRepository {
   ): Promise<SubscriptionEntity | null> {
     this.logger.debug(`Executing query: getSubscriptionById (${id})`);
     try {
-      return await this.usersRepository.findOne({
+      return await this.subsRepository.findOne({
         where: { _id: new ObjectId(id) },
       });
     } catch (error) {
@@ -53,9 +53,25 @@ export class SubscriptionsService implements SubscriptionsRepository {
   public async getSubscriptions(): Promise<SubscriptionEntity[]> {
     this.logger.debug(`Executing query: getSubscriptions`);
     try {
-      return await this.usersRepository.find();
+      return await this.subsRepository.find();
     } catch (error) {
       this.logger.error(`Error executing getSubscriptions, error: ${error}`);
+      return null;
+    }
+  }
+
+  public async getSubscriptionByUserId(
+    userId: string,
+  ): Promise<SubscriptionEntity | null> {
+    this.logger.debug(`Executing query: getSubscriptionByUserId (${userId})`);
+    try {
+      return await this.subsRepository.findOne({
+        where: { user: new ObjectId(userId) },
+      });
+    } catch (error) {
+      this.logger.error(
+        `Error executing getSubscriptionByUserId (${userId}), error: ${error}`,
+      );
       return null;
     }
   }

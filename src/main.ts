@@ -9,6 +9,10 @@ async function bootstrap() {
     .setDescription('Maria Fit Api')
     .setVersion('1.0')
     .addTag('users')
+    .addTag('plans')
+    .addTag('subscriptions')
+    .addTag('recipes')
+    .addTag('auth')
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, documentFactory);

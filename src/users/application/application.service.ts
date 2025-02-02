@@ -59,13 +59,42 @@ export class ApplicationService {
     const user = User.parse(userDB);
     user.sanitize();
 
-    return {
-      data: user,
+    const subs = await this.subsRepository.getSubscriptionByUserId(id);
+
+    const res: IResponse = {
+      data: null,
       error: false,
       mgs: 'Procesado correctamente',
       code: HttpStatus.OK,
       type: 'success',
     };
+
+    if (!subs) {
+      res.data = user;
+      return res;
+    }
+
+    const plan = await this.planRepository.getPlanById(subs.plan.toString());
+    if (!plan) {
+      res.data = user;
+      return res;
+    }
+
+    user.subscription = {
+      endDate: subs.endDate,
+      status: subs.subscription_status,
+      initDate: subs.initDate,
+    };
+
+    user.planType = {
+      amount: plan.price,
+      name: plan.type,
+      cicleType: plan.cicleType,
+      currency: plan.currency,
+    };
+
+    res.data = user;
+    return res;
   }
 
   public async createUser(

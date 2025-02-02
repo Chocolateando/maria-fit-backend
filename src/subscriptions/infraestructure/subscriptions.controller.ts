@@ -1,9 +1,10 @@
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Body, Controller, Get, Param, Post, Res } from '@nestjs/common';
 import { SubscriptionsApplication } from '../application/subscriptions.application';
 import { Response } from 'express';
 import { ICreateSubscription } from './dtos/dtos';
 
+@ApiBearerAuth()
 @ApiTags('subscriptions')
 @Controller('api/v1/subscriptions')
 export class SubscriptionsController {

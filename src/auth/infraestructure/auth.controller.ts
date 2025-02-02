@@ -3,7 +3,9 @@ import { Public } from '../../shared/infraestructure/decorators/public.decorator
 import { ICredentials } from './dtos/auth';
 import { Response } from 'express';
 import { ApplicationServices } from '../application/application.services';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('auth')
 @Controller('api/v1/auth')
 export class AuthController {
   constructor(private readonly _applicationService: ApplicationServices) {}

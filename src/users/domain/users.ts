@@ -14,6 +14,8 @@ export class User {
   password_hash: string;
   status: number;
   uType: string;
+  subscription?: Subscription;
+  planType?: PlanType;
   createdAt: Date;
   updatedAt: Date;
 
@@ -93,4 +95,17 @@ export class User {
   ): Promise<boolean> {
     return await CompareHash(password, hash);
   }
+}
+
+class Subscription {
+  status: string;
+  initDate: Date;
+  endDate: Date;
+}
+
+class PlanType {
+  name: string;
+  cicleType: string;
+  currency: string;
+  amount: string;
 }

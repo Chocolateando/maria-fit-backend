@@ -8,4 +8,8 @@ export abstract class SubscriptionsRepository {
   abstract createSubscription(
     subscription: SubscriptionEntity,
   ): Promise<boolean>;
+
+  abstract getSubscriptionByUserId(
+    userId: string,
+  ): Promise<SubscriptionEntity | null>;
 }
