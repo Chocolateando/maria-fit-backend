@@ -6,7 +6,7 @@ export class IResponse<T = any> {
   @ApiProperty({ example: 'The data is dynamic' })
   data: T;
   @ApiProperty({ example: 'Process successfully' })
-  mgs: string;
+  msg: string;
   @ApiProperty({ example: 200 })
   code: number;
   @ApiProperty({ example: 'success' })

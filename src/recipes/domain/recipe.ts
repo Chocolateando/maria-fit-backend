@@ -73,7 +73,6 @@ export class Recipe {
 }
 
 class Ingredients {
-  ingredientId: string;
   name: string;
   amount: string;
 }

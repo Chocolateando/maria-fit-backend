@@ -23,7 +23,7 @@ export class PlanEntity {
   cicleNumber: number;
   @Column({ type: 'varchar', nullable: false })
   description: string;
-  @Column(() => Characteristics)
+  @Column({ type: 'array' })
   characteristics: Characteristics[];
   @Column({ type: 'boolean', nullable: false })
   status: boolean;

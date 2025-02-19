@@ -5,9 +5,10 @@ import { SubscriptionsService } from './subscriptions.service';
 import { SubscriptionsApplication } from '../application/subscriptions.application';
 import { SubscriptionsController } from './subscriptions.controller';
 import { SubscriptionsRepository } from '../domain/subscriptions.repository';
+import { SecurityModule } from '../../shared/infraestructure/security/security.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([SubscriptionEntity])],
+  imports: [TypeOrmModule.forFeature([SubscriptionEntity]), SecurityModule],
   providers: [
     { provide: SubscriptionsRepository, useClass: SubscriptionsService },
     SubscriptionsApplication,

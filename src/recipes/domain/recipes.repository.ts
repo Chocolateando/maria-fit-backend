@@ -10,4 +10,6 @@ export abstract class RecipesRepository {
   abstract updateRecipe(recipe: RecipeEntity): Promise<RecipeEntity>;
 
   abstract deleteRecipe(id: string): Promise<boolean>;
+
+  abstract getRecipesByIds(ids: string[]): Promise<RecipeEntity[]>;
 }

@@ -10,6 +10,7 @@ import { PlansModule } from './plans/infraestructure/plans.module';
 import { SubscriptionsModule } from './subscriptions/infraestructure/subscriptions.module';
 import { RecipesModule } from './recipes/infraestructure/recipes.module';
 import { FiltersModule } from './filters/infraestructure/filters.module';
+import { FavoritesModule } from './favorites/infraestructure/favorites.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { FiltersModule } from './filters/infraestructure/filters.module';
     SubscriptionsModule,
     RecipesModule,
     FiltersModule,
+    FavoritesModule,
     SecurityModule,
   ],
   providers: [

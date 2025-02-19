@@ -3,10 +3,14 @@ import { RecipesRepository } from '../domain/recipes.repository';
 import { IResponse } from '../../shared/domain/response';
 import { Recipe } from '../domain/recipe';
 import { IRecipeDTO } from '../infraestructure/dtos/dtos';
+import { FavoritesRepository } from '../../favorites/domain/favorites.repository';
 
 @Injectable()
 export class RecipesApplication {
-  constructor(private readonly _recipesRepository: RecipesRepository) {}
+  constructor(
+    private readonly _recipesRepository: RecipesRepository,
+    private readonly _favRepository: FavoritesRepository,
+  ) {}
 
   public async getRecipes(): Promise<IResponse<Recipe[]>> {
     const recipes = await this._recipesRepository.getRecipes();
@@ -14,7 +18,7 @@ export class RecipesApplication {
       return {
         data: null,
         error: true,
-        mgs: 'No se pudo obtener las recetas',
+        msg: 'No se pudo obtener las recetas',
         code: HttpStatus.INTERNAL_SERVER_ERROR,
         type: 'error',
       };
@@ -24,7 +28,7 @@ export class RecipesApplication {
     return {
       data: data,
       error: false,
-      mgs: 'Procesado correctamente',
+      msg: 'Procesado correctamente',
       code: HttpStatus.OK,
       type: 'success',
     };
@@ -36,7 +40,7 @@ export class RecipesApplication {
       return {
         data: null,
         error: true,
-        mgs: 'No se encontro la receta',
+        msg: 'No se encontro la receta',
         code: HttpStatus.NOT_FOUND,
         type: 'error',
       };
@@ -46,7 +50,7 @@ export class RecipesApplication {
     return {
       data: recipe,
       error: false,
-      mgs: 'Procesado correctamente',
+      msg: 'Procesado correctamente',
       code: HttpStatus.OK,
       type: 'success',
     };
@@ -58,7 +62,7 @@ export class RecipesApplication {
       return {
         data: false,
         error: true,
-        mgs: 'No se pudo eliminar la receta',
+        msg: 'No se pudo eliminar la receta',
         code: HttpStatus.INTERNAL_SERVER_ERROR,
         type: 'error',
       };
@@ -67,7 +71,7 @@ export class RecipesApplication {
     return {
       data: true,
       error: false,
-      mgs: 'Procesado correctamente',
+      msg: 'Procesado correctamente',
       code: HttpStatus.OK,
       type: 'success',
     };
@@ -80,7 +84,7 @@ export class RecipesApplication {
       return {
         data: null,
         error: true,
-        mgs: 'No se pudo crear la receta',
+        msg: 'No se pudo crear la receta',
         code: HttpStatus.INTERNAL_SERVER_ERROR,
         type: 'error',
       };
@@ -89,7 +93,7 @@ export class RecipesApplication {
     return {
       data: Recipe.parseEntity(recipeDB),
       error: false,
-      mgs: 'Procesado correctamente',
+      msg: 'Procesado correctamente',
       code: HttpStatus.OK,
       type: 'success',
     };
@@ -102,7 +106,7 @@ export class RecipesApplication {
       return {
         data: null,
         error: true,
-        mgs: 'No se pudo actualizar la receta',
+        msg: 'No se pudo actualizar la receta',
         code: HttpStatus.INTERNAL_SERVER_ERROR,
         type: 'error',
       };
@@ -111,7 +115,68 @@ export class RecipesApplication {
     return {
       data: Recipe.parseEntity(recipeDB),
       error: false,
-      mgs: 'Procesado correctamente',
+      msg: 'Procesado correctamente',
+      code: HttpStatus.OK,
+      type: 'success',
+    };
+  }
+
+  public async getFavorites(userId: string): Promise<IResponse<Recipe[]>> {
+    const favorites = await this._favRepository.getFavorites(userId);
+    if (!favorites) {
+      return {
+        data: null,
+        error: true,
+        msg: 'No se pudieron obtener las recetas favoritas',
+        code: HttpStatus.NOT_FOUND,
+        type: 'error',
+      };
+    }
+
+    const recipes = await this._recipesRepository.getRecipesByIds(
+      favorites.map((fav) => fav.recipe.toString()),
+    );
+
+    if (!recipes) {
+      return {
+        data: null,
+        error: true,
+        msg: 'No se pudieron obtener las recetas favoritas',
+        code: HttpStatus.NOT_FOUND,
+        type: 'error',
+      };
+    }
+
+    return {
+      data: recipes.map((fav) => Recipe.parseEntity(fav)),
+      error: false,
+      msg: 'Procesado correctamente',
+      code: HttpStatus.OK,
+      type: 'success',
+    };
+  }
+
+  public async getIngredients(): Promise<IResponse<string[]>> {
+    const recipes = await this._recipesRepository.getRecipes();
+    if (!recipes) {
+      return {
+        data: null,
+        error: true,
+        msg: 'No se pudieron obtener los ingredientes',
+        code: HttpStatus.INTERNAL_SERVER_ERROR,
+        type: 'error',
+      };
+    }
+
+    const ingredients = recipes
+      .map((recipe) => recipe.ingredients)
+      .reduce((acc, val) => acc.concat(val), [])
+      .map((ingredient) => ingredient.name.trim());
+
+    return {
+      data: Array.from(new Set(ingredients)),
+      error: false,
+      msg: 'Procesado correctamente',
       code: HttpStatus.OK,
       type: 'success',
     };

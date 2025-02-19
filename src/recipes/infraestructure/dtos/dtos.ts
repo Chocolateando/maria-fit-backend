@@ -8,22 +8,21 @@ export interface IRecipeDTO {
   objetive: string;
   portions: number;
   preparationtime: string;
-  ingredients: IngredientsDTO[];
-  instructions: InstructionsDTO[];
+  ingredients: IngredientDTO[];
+  instructions: InstructionDTO[];
   tags: string;
   firstTag: string;
-  tipsAndTricks: InstructionsDTO[];
+  tipsAndTricks: InstructionDTO[];
   subscriptionType: string;
   image_url: string;
 }
 
-export interface IngredientsDTO {
-  ingredientId: string;
+export interface IngredientDTO {
   name: string;
   amount: string;
 }
 
-export interface InstructionsDTO {
+export interface InstructionDTO {
   orderNum: number;
   instruction: string;
 }

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, Post, Res, UseGuards } from '@nestjs/common';
 import { FiltersApplication } from '../application/filters.application';
 import { Response } from 'express';
 import { FilterDTO } from './dtos/dtos';
@@ -11,6 +11,7 @@ import {
 } from '@nestjs/swagger';
 import { IResponse } from '../../shared/domain/response';
 import { Public } from '../../shared/infraestructure/decorators/public.decorator';
+import { PermissionGuard } from '../../shared/infraestructure/guards/permission.guard';
 
 @ApiBearerAuth()
 @ApiTags('filters')
@@ -19,6 +20,7 @@ export class FiltersController {
   constructor(private readonly _filtersApplication: FiltersApplication) {}
 
   @Post('')
+  @UseGuards(PermissionGuard)
   @ApiOperation({ summary: 'Create filter' })
   @ApiBody({ type: FilterDTO })
   @ApiResponse({ status: 201, description: 'Filter created', type: IResponse })

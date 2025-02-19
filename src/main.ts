@@ -13,10 +13,17 @@ async function bootstrap() {
     .addTag('subscriptions')
     .addTag('recipes')
     .addTag('auth')
+    .addTag('favorites')
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, documentFactory);
   app.enableShutdownHooks();
+  app.enableCors({
+    methods: 'GET,POST,PUT,DELETE',
+    allowedHeaders: 'Content-Type,Authorization',
+    maxAge: 3600,
+    origin: '*',
+  });
   await app.listen(process.env.PORT ?? 3000);
 }
 

@@ -21,7 +21,7 @@ export class SubscriptionsApplication {
       return {
         data: false,
         error: true,
-        mgs: 'No se pudo crear la subscripcion',
+        msg: 'No se pudo crear la subscripcion',
         code: HttpStatus.ACCEPTED,
         type: 'error',
       };
@@ -30,7 +30,7 @@ export class SubscriptionsApplication {
     return {
       data: true,
       error: false,
-      mgs: 'Procesado correctamente',
+      msg: 'Procesado correctamente',
       code: HttpStatus.CREATED,
       type: 'success',
     };
@@ -44,7 +44,7 @@ export class SubscriptionsApplication {
       return {
         data: null,
         error: true,
-        mgs: 'No se pudo obtener la subscripcion',
+        msg: 'No se pudo obtener la subscripcion',
         code: HttpStatus.NOT_FOUND,
         type: 'error',
       };
@@ -54,7 +54,7 @@ export class SubscriptionsApplication {
     return {
       data: subscription,
       error: false,
-      mgs: 'Procesado correctamente',
+      msg: 'Procesado correctamente',
       code: HttpStatus.OK,
       type: 'success',
     };
@@ -66,7 +66,7 @@ export class SubscriptionsApplication {
       return {
         data: [],
         error: true,
-        mgs: 'No se pudo obtener las subscripciones',
+        msg: 'No se pudo obtener las subscripciones',
         code: HttpStatus.NOT_FOUND,
         type: 'error',
       };
@@ -77,7 +77,7 @@ export class SubscriptionsApplication {
     return {
       data: subscriptions,
       error: false,
-      mgs: 'Procesado correctamente',
+      msg: 'Procesado correctamente',
       code: HttpStatus.OK,
       type: 'success',
     };

@@ -23,7 +23,7 @@ export class ApplicationService {
       return {
         data: [],
         error: true,
-        mgs: 'No se pudo obtener los usuarios',
+        msg: 'No se pudo obtener los usuarios',
         code: HttpStatus.NOT_FOUND,
         type: 'error',
       };
@@ -38,7 +38,7 @@ export class ApplicationService {
     return {
       data: users,
       error: false,
-      mgs: 'Procesado correctamente',
+      msg: 'Procesado correctamente',
       code: HttpStatus.OK,
       type: 'success',
     };
@@ -50,7 +50,7 @@ export class ApplicationService {
       return {
         data: null,
         error: true,
-        mgs: 'No se pudo obtener el usuario',
+        msg: 'No se pudo obtener el usuario',
         code: HttpStatus.NOT_FOUND,
         type: 'error',
       };
@@ -64,7 +64,7 @@ export class ApplicationService {
     const res: IResponse = {
       data: null,
       error: false,
-      mgs: 'Procesado correctamente',
+      msg: 'Procesado correctamente',
       code: HttpStatus.OK,
       type: 'success',
     };
@@ -117,7 +117,7 @@ export class ApplicationService {
       return {
         data: false,
         error: true,
-        mgs: 'Ya existe un usuario con los datos proporcionados',
+        msg: 'Ya existe un usuario con los datos proporcionados',
         code: HttpStatus.CONFLICT,
         type: 'error',
       };
@@ -128,7 +128,7 @@ export class ApplicationService {
       return {
         data: false,
         error: true,
-        mgs: 'No se pudo crear el usuario',
+        msg: 'No se pudo crear el usuario',
         code: HttpStatus.ACCEPTED,
         type: 'error',
       };
@@ -139,7 +139,7 @@ export class ApplicationService {
       return {
         data: false,
         error: true,
-        mgs: 'No se pudo obtener el plan Free',
+        msg: 'No se pudo obtener el plan Free',
         code: HttpStatus.ACCEPTED,
         type: 'error',
       };
@@ -164,7 +164,7 @@ export class ApplicationService {
       return {
         data: false,
         error: true,
-        mgs: 'No se pudo crear la suscripción',
+        msg: 'No se pudo crear la suscripción',
         code: HttpStatus.ACCEPTED,
         type: 'error',
       };
@@ -173,7 +173,7 @@ export class ApplicationService {
     return {
       data: true,
       error: false,
-      mgs: 'Procesado correctamente',
+      msg: 'Procesado correctamente',
       code: HttpStatus.CREATED,
       type: 'success',
     };

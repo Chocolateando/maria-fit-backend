@@ -3,6 +3,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { ApplicationService } from '../application/application.service';
 import { Response } from 'express';
 import { ICreateUserDto } from './dtos/dtos';
+import { Public } from '../../shared/infraestructure/decorators/public.decorator';
 
 @ApiBearerAuth()
 @ApiTags('users')
@@ -16,6 +17,7 @@ export class UsersController {
     return res.status(response.code).json(response);
   }
 
+  @Public()
   @Post()
   public async createUser(@Body() req: ICreateUserDto, @Res() res: Response) {
     const response = await this.applicationService.createUser(req);

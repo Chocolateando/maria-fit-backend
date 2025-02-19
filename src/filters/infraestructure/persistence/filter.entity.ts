@@ -35,11 +35,11 @@ export class FilterEntity {
   name: string;
   @Column(() => Type)
   type: Type[];
-  @Column(() => Difficulty)
+  @Column({ type: 'array' })
   difficulty: Difficulty[];
-  @Column(() => Category)
+  @Column({ type: 'array' })
   category: Category[];
-  @Column(() => PlanType)
+  @Column({ type: 'array' })
   planType: PlanType[];
   @CreateDateColumn()
   createdAt: Date;

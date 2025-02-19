@@ -9,8 +9,6 @@ import {
 
 class Ingredients {
   @Column({ type: 'varchar', nullable: false })
-  ingredientId: string;
-  @Column({ type: 'varchar', nullable: false })
   name: string;
   @Column({ type: 'varchar', nullable: false })
   amount: string;
@@ -43,15 +41,15 @@ export class RecipeEntity {
   portions: number;
   @Column({ type: 'varchar', nullable: false })
   preparationtime: string;
-  @Column(() => Ingredients)
+  @Column({ type: 'array' })
   ingredients: Ingredients[];
-  @Column(() => Instructions)
+  @Column({ type: 'array' })
   instructions: Instructions[];
   @Column({ type: 'varchar', nullable: false })
   tags: string;
   @Column({ type: 'varchar', nullable: false })
   firstTag: string;
-  @Column(() => Instructions)
+  @Column({ type: 'array' })
   tipsAndTricks: Instructions[];
   @Column({ type: 'varchar', nullable: false })
   subscriptionType: string;

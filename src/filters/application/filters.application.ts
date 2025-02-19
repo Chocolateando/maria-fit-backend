@@ -18,7 +18,7 @@ export class FiltersApplication {
       return {
         error: true,
         data: null,
-        mgs: 'Error al crear el filtro',
+        msg: 'Error al crear el filtro',
         type: 'error',
         code: HttpStatus.ACCEPTED,
       };
@@ -27,7 +27,7 @@ export class FiltersApplication {
     return {
       error: false,
       data: filter,
-      mgs: 'Filtro creado correctamente',
+      msg: 'Filtro creado correctamente',
       type: 'success',
       code: HttpStatus.CREATED,
     };
@@ -40,7 +40,7 @@ export class FiltersApplication {
       return {
         error: true,
         data: null,
-        mgs: 'Error al obtener los filtros',
+        msg: 'Error al obtener los filtros',
         type: 'error',
         code: HttpStatus.ACCEPTED,
       };
@@ -49,7 +49,7 @@ export class FiltersApplication {
     return {
       error: false,
       data: filters.map((filter) => Filter.parseEntity(filter)),
-      mgs: 'Filtros obtenidos correctamente',
+      msg: 'Filtros obtenidos correctamente',
       type: 'success',
       code: HttpStatus.OK,
     };

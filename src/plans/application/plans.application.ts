@@ -14,7 +14,7 @@ export class PlansApplication {
       return {
         data: null,
         error: true,
-        mgs: 'No se pudo obtener el plan',
+        msg: 'No se pudo obtener el plan',
         code: HttpStatus.NOT_FOUND,
         type: 'error',
       };
@@ -24,7 +24,7 @@ export class PlansApplication {
     return {
       data: plan,
       error: false,
-      mgs: 'Procesado correctamente',
+      msg: 'Procesado correctamente',
       code: HttpStatus.OK,
       type: 'success',
     };
@@ -36,7 +36,7 @@ export class PlansApplication {
       return {
         data: [],
         error: true,
-        mgs: 'No se pudo obtener los planes',
+        msg: 'No se pudo obtener los planes',
         code: HttpStatus.NOT_FOUND,
         type: 'error',
       };
@@ -47,7 +47,7 @@ export class PlansApplication {
     return {
       data: plans,
       error: false,
-      mgs: 'Procesado correctamente',
+      msg: 'Procesado correctamente',
       code: HttpStatus.OK,
       type: 'success',
     };
@@ -60,7 +60,7 @@ export class PlansApplication {
       return {
         data: false,
         error: true,
-        mgs: 'No se pudo crear el plan',
+        msg: 'No se pudo crear el plan',
         code: HttpStatus.INTERNAL_SERVER_ERROR,
         type: 'error',
       };
@@ -69,7 +69,7 @@ export class PlansApplication {
     return {
       data: true,
       error: false,
-      mgs: 'Procesado correctamente',
+      msg: 'Procesado correctamente',
       code: HttpStatus.CREATED,
       type: 'success',
     };

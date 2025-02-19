@@ -13,7 +13,7 @@ export class ApplicationServices {
       return {
         data: null,
         error: true,
-        mgs: 'El correo no cumple con el formato requerido',
+        msg: 'El correo no cumple con el formato requerido',
         code: HttpStatus.BAD_REQUEST,
         type: 'error',
       };
@@ -24,7 +24,7 @@ export class ApplicationServices {
       return {
         data: null,
         error: true,
-        mgs: 'Usuario o contraseña incorrectos',
+        msg: 'Usuario o contraseña incorrectos',
         code: HttpStatus.UNAUTHORIZED,
         type: 'error',
       };
@@ -33,7 +33,7 @@ export class ApplicationServices {
     return {
       data: session,
       error: false,
-      mgs: 'Procesado correctamente',
+      msg: 'Procesado correctamente',
       code: HttpStatus.OK,
       type: 'success',
     };

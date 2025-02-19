@@ -5,12 +5,21 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { Body, Controller, Get, Param, Post, Res } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
 import { PlansApplication } from '../application/plans.application';
 import { Response } from 'express';
 import { ICreatePlanDTO } from './dtos/dtos';
 import { Public } from '../../shared/infraestructure/decorators/public.decorator';
 import { IResponse } from '../../shared/domain/response';
+import { PermissionGuard } from '../../shared/infraestructure/guards/permission.guard';
 
 @ApiBearerAuth()
 @ApiTags('plans')
@@ -34,6 +43,7 @@ export class PlansController {
     return res.status(response.code).json(response);
   }
 
+  @UseGuards(PermissionGuard)
   @Post('')
   @ApiOperation({ summary: 'Create plan' })
   @ApiBody({ type: ICreatePlanDTO })
