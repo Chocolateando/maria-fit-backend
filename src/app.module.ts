@@ -11,6 +11,7 @@ import { SubscriptionsModule } from './subscriptions/infraestructure/subscriptio
 import { RecipesModule } from './recipes/infraestructure/recipes.module';
 import { FiltersModule } from './filters/infraestructure/filters.module';
 import { FavoritesModule } from './favorites/infraestructure/favorites.module';
+import { ThrottlerGuard } from '@nestjs/throttler';
 
 @Module({
   imports: [
@@ -43,6 +44,10 @@ import { FavoritesModule } from './favorites/infraestructure/favorites.module';
     {
       provide: APP_GUARD,
       useClass: AuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
     },
   ],
 })

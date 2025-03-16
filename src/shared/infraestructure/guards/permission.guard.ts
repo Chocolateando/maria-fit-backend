@@ -17,7 +17,7 @@ export class PermissionGuard implements CanActivate {
     if (!token) throw new UnauthorizedException();
     try {
       const user = await this.jwtService.verifyAsync(token);
-      if (user.role !== '-99'){
+      if (user.role !== '-99') {
         throw new ForbiddenException(
           'You do not have permission to access this resource',
         );

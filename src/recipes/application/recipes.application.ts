@@ -12,7 +12,10 @@ export class RecipesApplication {
     private readonly _favRepository: FavoritesRepository,
   ) {}
 
-  public async getRecipes(): Promise<IResponse<Recipe[]>> {
+  public async getRecipes(
+    role: string,
+    plan: string,
+  ): Promise<IResponse<Recipe[]>> {
     const recipes = await this._recipesRepository.getRecipes();
     if (!recipes) {
       return {
@@ -23,8 +26,48 @@ export class RecipesApplication {
         type: 'error',
       };
     }
+    if (role === '-99') {
+      const data = recipes.map((recipe) => Recipe.parseEntity(recipe));
+      return {
+        data: data,
+        error: false,
+        msg: 'Procesado correctamente',
+        code: HttpStatus.OK,
+        type: 'success',
+      };
+    }
+    const data = [];
+    for (const recipe of recipes) {
+      const recipePlans = recipe.subscriptionType
+        .split(',')
+        .map((p) => p.trim());
+      let hasAccess = false;
 
-    const data = recipes.map((recipe) => Recipe.parseEntity(recipe));
+      switch (plan) {
+        case 'Plan plus':
+          hasAccess = recipePlans.some((p) =>
+            ['Plan plus', 'Plan básico', 'Free'].includes(p),
+          );
+          break;
+        case 'Plan básico':
+          hasAccess = recipePlans.some((p) =>
+            ['Plan básico', 'Free'].includes(p),
+          );
+          break;
+        case 'Free':
+          hasAccess = recipePlans.includes('Free');
+          break;
+      }
+
+      if (!hasAccess) {
+        recipe.ingredients = [];
+        recipe.tipsAndTricks = [];
+        recipe.instructions = [];
+      }
+
+      data.push(Recipe.parseEntity(recipe));
+    }
+
     return {
       data: data,
       error: false,
@@ -34,7 +77,11 @@ export class RecipesApplication {
     };
   }
 
-  public async getRecipeById(id: string): Promise<IResponse<Recipe | null>> {
+  public async getRecipeById(
+    id: string,
+    role: string,
+    plan: string,
+  ): Promise<IResponse<Recipe | null>> {
     const recipeDB = await this._recipesRepository.getRecipeById(id);
     if (!recipeDB) {
       return {
@@ -43,6 +90,48 @@ export class RecipesApplication {
         msg: 'No se encontro la receta',
         code: HttpStatus.NOT_FOUND,
         type: 'error',
+      };
+    }
+    if (role === '-99') {
+      return {
+        data: Recipe.parseEntity(recipeDB),
+        error: false,
+        msg: 'Procesado correctamente',
+        code: HttpStatus.OK,
+        type: 'success',
+      };
+    }
+
+    const recipePlans = recipeDB.subscriptionType
+      .split(',')
+      .map((p) => p.trim());
+    let hasAccess = false;
+
+    switch (plan) {
+      case 'Plan plus':
+        hasAccess = recipePlans.some((p) =>
+          ['Plan plus', 'Plan básico', 'Free'].includes(p),
+        );
+        break;
+      case 'Plan básico':
+        hasAccess = recipePlans.some((p) =>
+          ['Plan básico', 'Free'].includes(p),
+        );
+        break;
+      case 'Free':
+        hasAccess = recipePlans.includes('Free');
+        break;
+    }
+
+    if (!hasAccess) {
+      return {
+        data: null,
+        error: true,
+        msg:
+          'No tiene permisos para ver esta receta, esta disponible solo para los planes: ' +
+          recipeDB.subscriptionType,
+        code: HttpStatus.FORBIDDEN,
+        type: 'success',
       };
     }
 

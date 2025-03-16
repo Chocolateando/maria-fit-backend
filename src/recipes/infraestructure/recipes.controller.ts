@@ -13,6 +13,8 @@ import {
   Param,
   Post,
   Put,
+  Req,
+  Request,
   Res,
   UseGuards,
 } from '@nestjs/common';
@@ -69,8 +71,10 @@ export class RecipesController {
     description: 'Get Recipes',
     type: IResponse,
   })
-  public async getRecipes(@Res() res: Response) {
-    const response = await this._recipesApplication.getRecipes();
+  public async getRecipes(@Res() res: Response, @Req() req: Request) {
+    const role = req['user'].role;
+    const plan = req['user'].plan;
+    const response = await this._recipesApplication.getRecipes(role, plan);
     return res.status(response.code).json(response);
   }
 
@@ -106,8 +110,18 @@ export class RecipesController {
     description: 'Get Recipe by id',
     type: IResponse,
   })
-  public async getRecipeById(@Param('id') id: string, @Res() res: Response) {
-    const response = await this._recipesApplication.getRecipeById(id);
+  public async getRecipeById(
+    @Param('id') id: string,
+    @Res() res: Response,
+    @Req() req: Request,
+  ) {
+    const role = req['user'].role;
+    const plan = req['user'].plan;
+    const response = await this._recipesApplication.getRecipeById(
+      id,
+      role,
+      plan,
+    );
     return res.status(response.code).json(response);
   }
 }
